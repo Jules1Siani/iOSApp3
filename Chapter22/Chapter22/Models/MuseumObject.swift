@@ -8,7 +8,7 @@
 import Foundation
 
 /// Model representing a museum object from the British Museum API
-struct MuseumObject: Codable, Identifiable {
+struct MuseumObject: Codable, Identifiable, Hashable {
     let objectID: Int
     let title: String
     let creditLine: String
@@ -17,5 +17,17 @@ struct MuseumObject: Codable, Identifiable {
     let primaryImageSmall: String
 
     /// Unique ID required for SwiftUI List
-    var id: Int { objectID }
+    var id: Int {
+        return objectID
+    }
+
+    /// Hashable conformance
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(objectID)
+    }
+
+    /// Equality check 
+    static func == (lhs: MuseumObject, rhs: MuseumObject) -> Bool {
+        return lhs.objectID == rhs.objectID
+    }
 }
